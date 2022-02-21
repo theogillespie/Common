@@ -92,7 +92,7 @@ public:
 	};
 	
 	static double distance(Vector3 const& a, Vector3 const& b) {
-		return sqrt(pow(b.x - a.x, 2.0) + pow(b.y - a.y, 2.0) + pow(b.z - a.z, 2.0));
+		return abs(sqrt(pow(b.x - a.x, 2.0) + pow(b.y - a.y, 2.0) + pow(b.z - a.z, 2.0)));
 	};
 
 	Vector3 operator + (Vector3 const& vec) {

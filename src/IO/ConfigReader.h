@@ -9,6 +9,7 @@
 #include <iostream>
 
 #include "Console.h"
+#include "../Misc.h"
 
 using namespace std;
 
@@ -58,11 +59,6 @@ public:
     };
 
     ConfigReader() {}
-    
-
-    static void removeStringWhitespace(string* str) {
-        str->erase(remove_if(str->begin(), str->end(), ::isspace), str->end());
-    };
 
     vector<configElement>* parse() {
         ifstream ifs(this->filePath, ifstream::in);
@@ -91,8 +87,8 @@ public:
                 element.name = line.substr(0, line.find("="));
                 element.value = line.substr(line.find("=")+1, line.length());
 
-                ConfigReader::removeStringWhitespace(&element.name);
-                ConfigReader::removeStringWhitespace(&element.value);
+                removeStringWhitespace(&element.name);
+                removeStringWhitespace(&element.value);
 
                 this->elements.push_back(element);
 

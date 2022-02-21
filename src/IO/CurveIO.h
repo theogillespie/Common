@@ -7,6 +7,10 @@
 #include <fstream>
 
 #include "../Curve.h"
+#include "../Misc.h"
+#include "Console.h"
+
+class Curve;
 
 using namespace std;
 
@@ -36,15 +40,15 @@ using namespace std;
                     string xs = line.substr(0, line.find(_DELIMITER));
                     string ys = line.substr(line.find(_DELIMITER)+1, line.length());
 
-                    if(!configElement::isNumber(xs)) {
+                    if(!isNumber(xs)) {
                         continue;
                     }
 
-                    ConfigReader::removeStringWhitespace(&xs);
-                    ConfigReader::removeStringWhitespace(&ys);
+                    removeStringWhitespace(&xs);
+                    removeStringWhitespace(&ys);
 
-                    x->push_back(configElement::toNumber(xs));
-                    y->push_back(configElement::toNumber(ys));
+                    x->push_back(toNumber(xs));
+                    y->push_back(toNumber(ys));
                 }
                 } catch(exception* e) {
                     Console::error( e->what());
@@ -60,8 +64,7 @@ using namespace std;
             ifstream ifs(filepath, ifstream::out);
         }
             
-    }
-}
+    };
 
 
 //effectively works as naive csv reader

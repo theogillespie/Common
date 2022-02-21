@@ -56,7 +56,7 @@
 			return q;
 		}
 
-		// https://github.com/peregrine-developments/Orientation/blob/master/Quaternion/Quaternion.cpp
+		
 		static Quaternion fromEuler(Vector3 eulerAngles) {
 			eulerAngles.toRad();
 			double cy = cos(eulerAngles.z / 2);

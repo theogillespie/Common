@@ -3,6 +3,8 @@
 #include <vector>
 #include <string>
 #include "Misc.h"
+#include "Math/Interpolation.h"
+#include "IO/CurveIO.h"
 
 struct Curve {
     vector<double> x;
@@ -49,6 +51,5 @@ struct Curve {
         int x2 = ++x1;
         return Interpolate::lerp2(_x, this->x[x1], this->y[x1], this->x[x2], this->y[x2]);
     };
-
 };
 

@@ -32,6 +32,10 @@ using namespace std;
         return true;
     }
 
-    static double toNumber(string val) {
+    double toNumber(string val) {
         return stod(val);
+    };
+
+    void removeStringWhitespace(string* str) {
+        str->erase(remove_if(str->begin(), str->end(), ::isspace), str->end());
     };

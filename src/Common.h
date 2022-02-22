@@ -8,4 +8,5 @@ namespace Common {
 
     #include "IO/IO.h"
     #include "Math/Math.h"
+    #include "Space/Space.h"
 }

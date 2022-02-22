@@ -2,9 +2,13 @@
 
 #include <cmath>
 #include <math.h>
+#include <vector>
 
 #include "au.h"
 #include "../Math/Vector3.h"
+#include "../Constants.h"
+
+using namespace std;
 
 class OrbitalBody {
     public:
@@ -16,7 +20,7 @@ class OrbitalBody {
 
 class Orbit {
     public:
-        //in meters
+        // all in meters
         double apoapsis;
         double periapsis;
         double inclination;
@@ -24,36 +28,45 @@ class Orbit {
         double eccentricity;
         double period;
 
-        double specificOrbitalEnergy;
-        double orbitalDistance;
-        double orbitalVelocity;
-
-        double semiMajorAxis; // meters
+        double semiMajorAxis; 
         double semiMinorAxis;
-        OrbitalBody barycenter;
+        Vector3 barycenter;
+        Vector3 geometricCenter;
         OrbitalBody body;
+        OrbitalBody satellite;
 
         Orbit() {
+            this->semiMajorAxis = (this->apoapsis + this->periapsis) / 2;
+            this->semiMinorAxis = sqrt(this->apoapsis * this->periapsis);
+            this->eccentricity = sqrt(1 - ((this->semiMinorAxis * this->semiMinorAxis) / (this->semiMajorAxis * this->semiMajorAxis)));
 
+            // wrong
+            double x = Vector3::distance(this->body.position, this->satellite.position) / (1 + (this->body.mass / this->satellite.mass));
+            this->barycenter = new Vector3(this->body.position.x + x, this->body.position.y,this->body.position.z);
         }
 
-        // change to this:https://en.wikipedia.org/wiki/Semi-major_and_semi-minor_axes
-        void recalculate() {
-
-            this->semiMajorAxis = this->apoapsis - this->periapsis;
-            this->semiMinorAxis = this->semiMajorAxis * sqrt(1-(this->eccentricity * this->eccentricity));
-            double semiLatusRectum = this->semiMajorAxis * (1-(this->eccentricity * this->eccentricity));
-            double semiMajorAxisLength = 0;
-            
-
-            this->orbitalDistance = Vector3::distance(this->body.position, this->barycenter.position);
-            this->orbitalVelocity = (2 * PI * this->semiMajorAxis.magnitude()) / this->period;
-            
-            double u = this->barycenter.gravitationalParamater + this->body.gravitationalParamater;
-            this->specificOrbitalEnergy = ((this->orbitalVelocity * this->orbitalVelocity)/2) - (u/this->orbitalDistance);
-
-            Vector3 h = this->body.angularMomentum / this->body.mass;
-            this->eccentricity = ((((h*h) * 2 * this->specificOrbitalEnergy) / (u*u)) + 1).magnitude();
+        update() {
+            //https://space.stackexchange.com/questions/8911/determining-orbital-position-at-a-future-point-in-time
         }
 
+        vector<Vector3> rotatePoints(vector<Vector3> points) {
+            for(unsigned int = 0; i < points.size(); i++) {
+                
+            }
+        }
+
+        vector<Vector3> generateGeometry(double resolution=1000) {
+            vector<Vector3> points;
+            
+            double dt = THETA / resolution;
+            double h = geometricCenter.x;
+            double k = geometricCenter.y;
+            double rh = apoapsis;
+            double rk = periapsis;
+
+            for(double x = 0; x < THETA; x += dt) {
+                points.push_back(Vector3(h + rh * cos(x), k - rk * sin(x),));
+            }
+
+        }
 };
